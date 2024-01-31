@@ -7,5 +7,5 @@ asyncpg_engine = create_async_engine(
     echo=False,
     future=True,
     pool_size=settings.DB_POOL_SIZE,
-    max_overflow=15,
+    max_overflow=settings.MAX_OVERFLOW,
 )

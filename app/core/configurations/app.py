@@ -17,7 +17,8 @@ class AppSettings(BaseSettings):
     PROJECT_NAME: str = "Valeria"
     ASYNC_DATABASE_URL: PostgresDsn | str
     DATABASE_URL: PostgresDsn | str
-    DB_POOL_SIZE: int = 64
+    DB_POOL_SIZE: int = 1
+    MAX_OVERFLOW: int = 1
 
     SECRET_KEY: str
 

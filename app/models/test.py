@@ -4,7 +4,7 @@ from sqlalchemy_utils.types.encrypted.encrypted_type import EncryptedType
 from sqlalchemy import String
 
 from app.core.settings import settings
-from app.models.base_uuid import BaseEntityModel
+from app.models.base import BaseEntityModel
 
 
 class BaseUser(SQLModel):

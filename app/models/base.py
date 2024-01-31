@@ -1,9 +1,9 @@
-
 from sqlmodel import SQLModel as _SQLModel, Field
 from sqlalchemy.orm import declared_attr
 from datetime import datetime
 
 from uuid import UUID, uuid4
+
 
 class SQLModel(_SQLModel):
     @declared_attr
@@ -18,9 +18,7 @@ class BaseEntityModel(SQLModel):
         index=True,
         nullable=False
     )
-
     updated_at: datetime | None = Field(
         default_factory=datetime.utcnow, sa_column_kwargs={"onupdate": datetime.utcnow}
     )
-
     created_at: datetime | None = Field(default_factory=datetime.utcnow)
