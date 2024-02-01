@@ -13,4 +13,4 @@ class CRUDTransmitter(
     pass
 
 
-transmitter = CRUDTransmitter(model=models.MeasurementType)
+transmitter = CRUDTransmitter(model=models.Transmitter)

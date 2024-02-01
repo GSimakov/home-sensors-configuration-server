@@ -4,11 +4,14 @@ from app.utils.base_model import BaseEntityModel
 
 
 class BaseMeasurementType(SQLModel):
+    name: str
     unit: str
 
 
 class MeasurementTypeUpdate(BaseMeasurementType):
+    name: str | None = None
     unit: str | None = None
+
 
 
 class MeasurementType(BaseEntityModel, BaseMeasurementType, table=True):
