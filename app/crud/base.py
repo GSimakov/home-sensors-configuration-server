@@ -19,9 +19,8 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
 class CRUDBase(Generic[DefaultModelType, CreateSchemaType, UpdateSchemaType]):
-    def __init__(self, session: AsyncSession, model: type[DefaultModelType]):
+    def __init__(self, model: type[DefaultModelType]):
         self.model = model
-        self.session = session
 
     @session_manager
     async def get(
