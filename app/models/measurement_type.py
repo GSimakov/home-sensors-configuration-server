@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel
+from sqlmodel import SQLModel, Relationship
 
 from app.utils.base_model import BaseEntityModel
 
@@ -19,4 +19,10 @@ class MeasurementType(BaseEntityModel, BaseMeasurementType, table=True):
     __tablename__ = 'MeasurementType'
     __table_args__ = {'extend_existing': True}
 
-
+    sensors: list["Sensor"] = Relationship(
+        back_populates='measurement_type',
+        sa_relationship_kwargs={
+            "lazy": "selectin",
+            "foreign_keys": "Sensor.measurement_type_id",
+        }
+    )

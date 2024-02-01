@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, Field, Column
+from sqlmodel import SQLModel, Field, Column, Relationship
 from sqlalchemy_utils.types.ip_address import IPAddressType
 
 from app.utils.base_model import BaseEntityModel
@@ -21,3 +21,10 @@ class Transmitter(BaseEntityModel, BaseTransmitter, table=True):
     __table_args__ = {'extend_existing': True}
 
 
+    sensor: "Sensor" = Relationship(
+        back_populates='transmitter',
+        sa_relationship_kwargs={
+            "lazy": "selectin",
+            "foreign_keys": "Sensor.transmitter_id",
+        }
+    )
