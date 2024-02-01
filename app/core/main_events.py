@@ -2,29 +2,12 @@ from typing import Callable
 from fastapi import FastAPI
 from loguru import logger
 
-from app.crud import user
 
 def create_start_app_handler(
     app: FastAPI,
 ) -> Callable:
     async def start_app() -> None:
-        lalala = await user.get_count_wrapped()
-        print(lalala)
-        lalala = await user.get_count_wrapped()
-        print(lalala)
-        lalala = await user.get_count_wrapped()
-        print(lalala)
-        lalala = await user.get_count_wrapped()
-        print(lalala)
-        lalala = await user.get_count_wrapped()
-        print(lalala)
-        lalala = await user.get_count_wrapped()
-        print(lalala)
-        lalala = await user.get_count_wrapped()
-        print(lalala)
-        lalala = await user.get_count_wrapped()
-        print(lalala)
-
+        pass
         # sudo docker container restart minio && sudo docker container restart magical_williams
     return start_app
 

@@ -1,6 +1,7 @@
 import inspect
 from pydantic import BaseModel
 
+
 def optional(*fields):
     def dec(_cls):
         for field in fields:

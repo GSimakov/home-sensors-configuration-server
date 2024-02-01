@@ -1,1 +1,1 @@
-from .test import user
+from .sensor import sensor
