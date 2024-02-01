@@ -2,12 +2,14 @@ from typing import Callable
 from fastapi import FastAPI
 from loguru import logger
 
+from app.utils.base_data.insert import insert
+
 
 def create_start_app_handler(
     app: FastAPI,
 ) -> Callable:
     async def start_app() -> None:
-        pass
+        await insert()
         # sudo docker container restart minio && sudo docker container restart magical_williams
     return start_app
 
