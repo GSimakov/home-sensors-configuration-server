@@ -4,10 +4,12 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from app.crud.base import CRUDBase
 from app import schemas
 from app import models
+from app.utils.session import session_manager
 
 
 class CRUDSensor(CRUDBase[models.Sensor, schemas.ISensorCreate, schemas.ISensorUpdate]):
 
+    @session_manager
     async def get_by_name(
             self,
             name: str,
