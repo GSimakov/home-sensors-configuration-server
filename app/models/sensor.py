@@ -25,10 +25,10 @@ class BaseSensor(SQLModel):
 class SensorUpdate(BaseSensor):
     name: str | None = None
     description: str | None = None
-    MAC: str | None = None
-    IP: str | None = None
-    type: str | None = None
-    measurement: str | None = None
+
+    transmitter_id: UUID | None
+    type_id: UUID | None
+    measurement_type_id: UUID | None
 
 
 class Sensor(BaseEntityModel, BaseSensor, table=True):
