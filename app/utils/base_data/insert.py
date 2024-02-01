@@ -8,6 +8,11 @@ from app import crud
 
 async def insert():
 
+    for sensor in sensors:
+        current_sensor = await crud.sensor.get_by_name(name=sensor.name)
+        if not current_sensor:
+            await crud.sensor.create(obj_in=sensor)
+
     for sensor_type in sensor_types:
         current_sensor_type = await crud.sensor_type.get_by_name(name=sensor_type.name)
         if not current_sensor_type:
@@ -22,3 +27,5 @@ async def insert():
         current_transmitter = await crud.transmitter.get_by_mac(mac=transmitter.MAC)
         if not current_transmitter:
             await crud.transmitter.create(obj_in=transmitter)
+
+

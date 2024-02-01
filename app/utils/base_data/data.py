@@ -1,9 +1,14 @@
-from app.schemas import ISensorTypeCreate, IMeasurementTypeCreate, ITransmitterCreate
+from app.schemas import ISensorTypeCreate, IMeasurementTypeCreate, ITransmitterCreate, ISensorCreate
 
+sensors: list[ISensorCreate] = [
+    ISensorCreate(name='Датчик1', description='описание датчика 1'),
+    ISensorCreate(name='Датчик2', description='описание датчика 2'),
+    ISensorCreate(name='Датчик3', description='описание датчика 3'),
+]
 
 sensor_types: list[ISensorTypeCreate] = [
     ISensorTypeCreate(name="Датчик яркости"),
-    ISensorTypeCreate(name="Датчик яркости"),
+    ISensorTypeCreate(name="Датчик влажности"),
     ISensorTypeCreate(name="Датчик температуры"),
 ]
 
