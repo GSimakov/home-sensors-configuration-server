@@ -25,9 +25,9 @@ class BaseSensor(SQLModel):
 class SensorUpdate(BaseSensor):
     name: str | None = None
     description: str | None = None
-    transmitter_id: UUID | None
-    type_id: UUID | None
-    measurement_type_id: UUID | None
+    transmitter_id: UUID | None = None
+    type_id: UUID | None = None
+    measurement_type_id: UUID | None = None
 
 
 class Sensor(BaseEntityModel, BaseSensor, table=True):

@@ -5,7 +5,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.core.main_events import create_start_app_handler, create_stop_app_handler
 from app.core.settings import settings
-from app.api.v1.api import api_router_v1
+from app.api.v1.router import api_router_v1
 
 
 

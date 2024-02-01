@@ -9,6 +9,8 @@ from typing import Annotated
 from app import schemas
 from app import models
 from app import crud
+from .. import dependencies as deps
+from app.utils import checks
 
 from app.schemas.response_schema import (
     IPostResponseBase,
@@ -33,116 +35,38 @@ async def read_sensors_list(
     return create_response(data=response)
 
 
+@router.get("/{id}")
+async def get_sensor_by_id(
+        current_sensor: models.Sensor = Depends(
+            deps.get_sensor_by_id_from_path
+        ),
+) -> IGetResponseBase[schemas.ISensorRead]:
+    """
+    Gets a sensor by its id
+    """
+    return create_response(data=current_sensor)
 
 
-# @router.get("/list/by_role_name")
-# async def read_users_list_by_role_name(
-#         user_status: Annotated[
-#             IUserStatus,
-#             Query(
-#                 title="User status",
-#                 description="User status, It is optional. Default is active",
-#             ),
-#         ] = IUserStatus.active,
-#         role_name: str = "",
-#         params: Params = Depends(),
-#         current_user: User = Depends(
-#             deps.get_current_user(required_roles=[IRoleEnum.admin])
-#         ),
-# ) -> IGetResponsePaginated[IUserReadWithoutGroups]:
-#     """
-#     Retrieve users by role name and status.
-#     Required roles:
-#     - admin
-#     """
-#     user_status = True if user_status == IUserStatus.active else False
-#     query = (
-#         select(User)
-#         .where(
-#             and_(
-#                 User.role_id == (
-#                     select(Role.id).where(Role.name == role_name)
-#                 ).scalar_subquery(),
-#                 User.is_active == user_status
-#             )
-#         ).order_by(User.first_name)
-#     )
-#     users = await crud.user.get_multi_paginated(query=query, params=params)
-#     return create_response(data=users)
-#
-#
-# @router.get("/order_by_created_at")
-# async def get_user_list_order_by_created_at(
-#         params: Params = Depends(),
-#         current_user: User = Depends(
-#             deps.get_current_user(required_roles=[IRoleEnum.admin, IRoleEnum.manager])
-#         ),
-# ) -> IGetResponsePaginated[IUserReadWithoutGroups]:
-#     """
-#     Gets a paginated list of users ordered by created datetime
-#     Required roles:
-#     - admin
-#     - manager
-#     """
-#     users = await crud.user.get_multi_paginated_ordered(
-#         params=params, order_by="created_at"
-#     )
-#     return create_response(data=users)
-#
-#
-# @router.get("/{user_id}")
-# async def get_user_by_id(
-#         user: User = Depends(user_deps.is_valid_user),
-#         current_user: User = Depends(
-#             deps.get_current_user(required_roles=[IRoleEnum.admin, IRoleEnum.manager])
-#         ),
-# ) -> IGetResponseBase[IUserRead]:
-#     """
-#     Gets a user by his/her id
-#     Required roles:
-#     - admin
-#     - manager
-#     """
-#     return create_response(data=user)
-#
-#
-# @router.get("")
-# async def get_my_data(
-#         current_user: User = Depends(deps.get_current_user()),
-# ) -> IGetResponseBase[IUserReadWithGroups]:
-#     """
-#     Gets my user profile information
-#     """
-#     return create_response(data=current_user)
-#
-# @router.put("")
-# async def update_my_data(
-#         user: IUserUpdateForRoleUser,
-#         current_user: User = Depends(deps.get_current_user()),
-# ) -> IPutResponseBase[IUserReadWithGroups]:
-#     """
-#     Updates current user profile information
-#     """
-#     user_updated = await crud.user.update(obj_current=current_user, obj_new=user)
-#     return create_response(data=user_updated)
-#
-# @router.put("/{user_id}")
-# async def update_user_by_id(
-#         user: IUserUpdate,
-#         alterable_user: User = Depends(user_deps.is_valid_user),
-#         current_user: User = Depends(
-#             deps.get_current_user(required_roles=[IRoleEnum.admin, IRoleEnum.manager])
-#         ),
-# ) -> IPutResponseBase[IUserRead]:
-#     """
-#     Updates a user by his/her id
-#     Required roles:
-#     - admin
-#     - manager
-#     """
-#     user_updated = await crud.user.update(obj_current=alterable_user, obj_new=user)
-#     return create_response(data=user_updated)
-#
+@router.put("/{id}")
+async def update_sensor_by_id(
+        sensor: schemas.ISensorUpdate,
+        current_sensor: models.Sensor = Depends(
+            deps.get_sensor_by_id_from_path
+        ),
+) -> IPutResponseBase[schemas.ISensorRead]:
+    """
+    Updates a sensor by id
+    """
+    if sensor.transmitter_id:
+        await checks.transmitter_is_exist(id=sensor.transmitter_id)
+    if sensor.type_id:
+        await checks.sensor_type_is_exist(id=sensor.type_id)
+    if sensor.measurement_type_id:
+        await checks.measurements_type_is_exist(id=sensor.measurement_type_id)
+
+    updated = await crud.sensor.update(obj_current=current_sensor, obj_new=sensor)
+    return create_response(data=updated)
+
 # @router.post("", status_code=status.HTTP_201_CREATED)
 # async def create_user(
 #         new_user: IUserCreate = Depends(user_deps.user_exists),
