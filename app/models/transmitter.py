@@ -21,10 +21,10 @@ class Transmitter(BaseEntityModel, BaseTransmitter, table=True):
     __table_args__ = {'extend_existing': True}
 
 
-    sensor: "Sensor" = Relationship(
+    das: "DataAcquisitionSystem" = Relationship(
         back_populates='transmitter',
         sa_relationship_kwargs={
             "lazy": "selectin",
-            "foreign_keys": "Sensor.transmitter_id",
+            "foreign_keys": "DataAcquisitionSystem.transmitter_id",
         }
     )
