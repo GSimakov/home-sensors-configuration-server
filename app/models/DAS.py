@@ -7,7 +7,7 @@ from app.utils.base_model import BaseEntityModel
 class BaseDataAcquisitionSystem(SQLModel):
 
     name: str | None = Field(nullable=True)
-
+    hardware_id: UUID = Field(nullable=False)
     board_id: UUID | None = Field(
         default=None, foreign_key="Board.id"
     )
@@ -22,7 +22,7 @@ class BaseDataAcquisitionSystem(SQLModel):
 
 
 class DataAcquisitionSystemUpdate(BaseDataAcquisitionSystem):
-    hardware_id: UUID
+    hardware_id: UUID | None
     name: str | None = None
     transmitter_id: UUID | None = None
     sensor_id: UUID | None = None
