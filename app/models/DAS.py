@@ -1,4 +1,7 @@
 from uuid import UUID
+
+from sqlalchemy import Column
+from sqlalchemy_utils import IPAddressType
 from sqlmodel import SQLModel, Field, Relationship
 
 from app.utils.base_model import BaseEntityModel
@@ -6,14 +9,13 @@ from app.utils.base_model import BaseEntityModel
 
 class BaseDataAcquisitionSystem(SQLModel):
 
-    name: str | None = Field(nullable=True)
-    hardware_id: UUID = Field(nullable=False)
+    name: str | None = None
+    hardware_id: str = Field(nullable=False)
+
+    address: str = Field(sa_column=Column(IPAddressType, nullable=False))
+
     board_id: UUID | None = Field(
         default=None, foreign_key="Board.id"
-    )
-
-    transmitter_id: UUID | None = Field(
-        default=None, foreign_key="Transmitter.id"
     )
 
     sensor_id: UUID | None = Field(
@@ -24,7 +26,6 @@ class BaseDataAcquisitionSystem(SQLModel):
 class DataAcquisitionSystemUpdate(BaseDataAcquisitionSystem):
     hardware_id: UUID | None
     name: str | None = None
-    transmitter_id: UUID | None = None
     sensor_id: UUID | None = None
     board_id: UUID | None
 
@@ -40,14 +41,6 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
         sa_relationship_kwargs={
             "lazy": "joined",
             "primaryjoin": "DataAcquisitionSystem.sensor_id==Sensor.id",
-        }
-    )
-
-    transmitter: "Transmitter" = Relationship(
-        back_populates='das',
-        sa_relationship_kwargs={
-            "lazy": "joined",
-            "primaryjoin": "DataAcquisitionSystem.transmitter_id==Transmitter.id",
         }
     )
 

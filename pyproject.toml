@@ -26,6 +26,8 @@ cryptography = "^42.0.0"
 alembic = "^1.13.1"
 psycopg = "^3.1.17"
 psycopg-binary = "^3.1.17"
+arprequest = "^0.3"
+scapy = "^2.5.0"
 
 
 [build-system]
