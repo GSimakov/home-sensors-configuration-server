@@ -64,8 +64,6 @@ async def update_das_by_id(
     """
     if update.board_id:
         await checks.board_is_exist(id=update.board_id)
-    if update.transmitter_id:
-        await checks.transmitter_is_exist(id=update.transmitter_id)
     if update.sensor_id:
         await checks.sensor_is_exist(id=update.sensor_id)
 

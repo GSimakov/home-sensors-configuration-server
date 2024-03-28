@@ -6,7 +6,7 @@ class IDASCreate(models.BaseDataAcquisitionSystem):
     pass
 
 
-class IDASUpdate(models.BaseDataAcquisitionSystem):
+class IDASUpdate(models.DataAcquisitionSystemUpdate):
     pass
 
 
