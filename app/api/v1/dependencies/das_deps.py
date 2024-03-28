@@ -6,11 +6,11 @@ from app import crud
 from app import models
 from app.utils.exceptions import IdNotFoundException
 
-__all__ = ['get_mt_by_id_from_path', 'get_mt_by_id_from_query']
+__all__ = ['get_das_by_id_from_path', 'get_das_by_id_from_query']
 
-model = models.MeasurementType
-crud_repo = crud.measurement_type #todo naming
-id_param_description = 'The UUID id of the measurement type'
+model = models.DataAcquisitionSystem
+crud_repo = crud.das #todo naming
+id_param_description = 'The UUID id of the DAS'
 
 
 async def get(id: UUID) -> model:
@@ -20,13 +20,13 @@ async def get(id: UUID) -> model:
     return response
 
 
-async def get_mt_by_id_from_path(
+async def get_das_by_id_from_path(
         id: Annotated[UUID, Path(description=id_param_description)]
 ) -> model:
     return await get(id=id)
 
 
-async def get_mt_by_id_from_query(
+async def get_das_by_id_from_query(
         id: Annotated[UUID, Query(description=id_param_description)]
 ) -> model:
     return await get(id=id)
