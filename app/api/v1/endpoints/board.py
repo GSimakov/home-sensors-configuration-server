@@ -19,12 +19,12 @@ router = APIRouter()
 
 obj_in_message = 'Board'
 
-model = models.Transmitter
-read_schema = schemas.ITransmitterRead
-update_schema = schemas.ITransmitterUpdate
-create_schema = schemas.ITransmitterCreate
+model = models.Board
+read_schema = schemas.IBoardRead
+update_schema = schemas.IBoardUpdate
+create_schema = schemas.IBoardCreate
 
-crud_repo = crud.transmitter
+crud_repo = crud.board
 deps_from_path = deps.get_board_by_id_from_path
 
 @router.get("/list")
