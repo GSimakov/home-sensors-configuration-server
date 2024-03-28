@@ -5,7 +5,7 @@ from app import schemas
 from app import models
 from app import crud
 from app.api.v1 import dependencies as deps
-from app.utils import checks
+from app.utils.registration import registration
 
 from app.schemas.response_schema import (
     IPostResponseBase,
@@ -15,6 +15,7 @@ from app.schemas.response_schema import (
     IDeleteResponseBase,
     IPutResponseBase
 )
+
 
 router = APIRouter()
 
@@ -39,11 +40,9 @@ async def register_das(
     """
     das_ip_addr = request.client.host
 
-    await checks.das_hardware_id_is_taken(hardware_id=hardware_id)
-    new_das = create_schema(hardware_id=hardware_id)
-    await crud_das.create(obj_in=new_das)
+    returning = await registration(hardware_id=hardware_id, addr=das_ip_addr)
 
-    return 0
+    return returning
 
 
 @router.delete("/{id}")
