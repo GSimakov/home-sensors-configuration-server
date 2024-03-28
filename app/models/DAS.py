@@ -22,6 +22,7 @@ class BaseDataAcquisitionSystem(SQLModel):
 
 
 class DataAcquisitionSystemUpdate(BaseDataAcquisitionSystem):
+    hardware_id: UUID
     name: str | None = None
     transmitter_id: UUID | None = None
     sensor_id: UUID | None = None
