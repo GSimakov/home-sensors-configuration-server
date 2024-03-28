@@ -1,19 +1,19 @@
 """init
 
-Revision ID: deb22d078f8f
+Revision ID: 9c6b9c450a42
 Revises: 
-Create Date: 2024-03-28 16:14:07.072933
+Create Date: 2024-03-28 17:18:46.510931
 
 """
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-import sqlalchemy_utils
 import sqlmodel
 
+
 # revision identifiers, used by Alembic.
-revision: str = 'deb22d078f8f'
+revision: str = '9c6b9c450a42'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -53,7 +53,7 @@ def upgrade() -> None:
     op.create_table('DataAcquisitionSystem',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('hardware_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('address', sqlalchemy_utils.types.ip_address.IPAddressType(length=50), nullable=False),
+    sa.Column('address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('board_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('sensor_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
