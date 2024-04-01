@@ -51,3 +51,11 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
             "primaryjoin": "DataAcquisitionSystem.board_id==Board.id",
         }
     )
+
+    journal: list["JournalDAS"] = Relationship(
+        back_populates='das',
+        sa_relationship_kwargs={
+            "lazy": "selectin",
+            'foreign_keys': 'JournalDAS.DAS_id',
+        }
+    )

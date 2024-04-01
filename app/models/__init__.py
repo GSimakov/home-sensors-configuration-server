@@ -2,3 +2,4 @@ from .DAS import BaseDataAcquisitionSystem, DataAcquisitionSystem, DataAcquisiti
 from .sensor import Sensor, BaseSensor, SensorUpdate
 from .measurement_type import MeasurementType, MeasurementTypeUpdate, BaseMeasurementType
 from .board import Board, BaseBoard, BoardUpdate
+from  .journal_DAS import JournalDAS, BaseJournalDAS
