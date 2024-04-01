@@ -3,6 +3,8 @@ from sqlmodel import SQLModel, Field, Relationship
 
 from app.utils.base_model import BaseEntityModel
 
+__all__ = ['BaseBoard', 'Board', 'BoardUpdate']
+
 
 class BaseBoard(SQLModel):
 

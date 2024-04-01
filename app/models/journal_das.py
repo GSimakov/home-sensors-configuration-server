@@ -3,6 +3,8 @@ from sqlmodel import SQLModel, Field, Relationship
 
 from app.utils.base_model import BaseEntityModel
 
+__all__ = ['BaseJournalDAS', 'JournalDAS']
+
 
 class BaseJournalDAS(SQLModel):
     DAS_id: UUID = Field(foreign_key="DataAcquisitionSystem.id")

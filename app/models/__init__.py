@@ -1,5 +1,5 @@
-from .DAS import BaseDataAcquisitionSystem, DataAcquisitionSystem, DataAcquisitionSystemUpdate
-from .sensor import Sensor, BaseSensor, SensorUpdate
-from .measurement_type import MeasurementType, MeasurementTypeUpdate, BaseMeasurementType
-from .board import Board, BaseBoard, BoardUpdate
-from  .journal_das import JournalDAS, BaseJournalDAS
+from .DAS import *
+from .sensor import *
+from .measurement_type import *
+from .board import *
+from .journal_das import *

@@ -5,6 +5,8 @@ from sqlmodel import SQLModel, Field, Relationship
 
 from app.utils.base_model import BaseEntityModel
 
+__all__ = ['BaseDataAcquisitionSystem', 'DataAcquisitionSystem', 'DataAcquisitionSystemUpdate']
+
 
 class BaseDataAcquisitionSystem(SQLModel):
 

@@ -2,6 +2,8 @@ from sqlmodel import SQLModel, Relationship
 
 from app.utils.base_model import BaseEntityModel
 
+__all__ = ['BaseMeasurementType', 'MeasurementType', 'MeasurementTypeUpdate']
+
 
 class BaseMeasurementType(SQLModel):
     name: str

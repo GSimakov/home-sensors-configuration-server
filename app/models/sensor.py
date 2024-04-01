@@ -4,6 +4,9 @@ from sqlmodel import SQLModel, Field, Relationship
 from app.utils.base_model import BaseEntityModel
 
 
+__all__ = ['BaseSensor', 'Sensor', 'SensorUpdate']
+
+
 class BaseSensor(SQLModel):
     name: str
     type: str
