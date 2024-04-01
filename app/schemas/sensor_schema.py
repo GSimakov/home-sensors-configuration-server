@@ -1,15 +1,20 @@
 from uuid import UUID
 from app import models
 
+__all__ = ['ISensorCreate', 'ISensorUpdate', 'ISensorRead']
 
-class ISensorCreate(models.BaseSensor):
+base_model = models.BaseSensor
+update_model = models.SensorUpdate
+
+
+class ISensorCreate(base_model):
     pass
 
 
-class ISensorUpdate(models.SensorUpdate):
+class ISensorUpdate(update_model):
     pass
 
 
-class ISensorRead(models.BaseSensor):
+class ISensorRead(base_model):
     id: UUID
 

@@ -2,14 +2,20 @@ from uuid import UUID
 from app import models
 
 
-class IDASCreate(models.BaseDataAcquisitionSystem):
+__all__ = ['IDASCreate', 'IDASUpdate', 'IDASRead']
+
+base_model = models.BaseDataAcquisitionSystem
+update_model = models.DataAcquisitionSystemUpdate
+
+
+class IDASCreate(base_model):
     pass
 
 
-class IDASUpdate(models.DataAcquisitionSystemUpdate):
+class IDASUpdate(update_model):
     pass
 
 
-class IDASRead(models.BaseDataAcquisitionSystem):
+class IDASRead(base_model):
     id: UUID
 

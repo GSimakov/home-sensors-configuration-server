@@ -1,15 +1,20 @@
 from uuid import UUID
 from app import models
 
+__all__ = ['IBoardCreate', 'IBoardUpdate', 'IBoardRead']
 
-class IBoardCreate(models.BaseBoard):
+base_model = models.BaseBoard
+update_model = models.BoardUpdate
+
+
+class IBoardCreate(base_model):
     pass
 
 
-class IBoardUpdate(models.BaseBoard):
+class IBoardUpdate(update_model):
     pass
 
 
-class IBoardRead(models.BaseBoard):
+class IBoardRead(base_model):
     id: UUID
 

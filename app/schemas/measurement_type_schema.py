@@ -1,15 +1,20 @@
 from uuid import UUID
 from app import models
 
+__all__ = ['IMeasurementTypeCreate', 'IMeasurementTypeUpdate', 'IMeasurementTypeRead']
 
-class IMeasurementTypeCreate(models.BaseMeasurementType):
+base_model = models.BaseMeasurementType
+update_model = models.MeasurementTypeUpdate
+
+
+class IMeasurementTypeCreate(base_model):
     pass
 
 
-class IMeasurementTypeUpdate(models.MeasurementTypeUpdate):
+class IMeasurementTypeUpdate(update_model):
     pass
 
 
-class IMeasurementTypeRead(models.BaseMeasurementType):
+class IMeasurementTypeRead(base_model):
     id: UUID
 
