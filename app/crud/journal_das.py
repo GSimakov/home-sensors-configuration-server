@@ -1,23 +1,14 @@
-# from sqlmodel import select
-# from sqlmodel.ext.asyncio.session import AsyncSession
-#
-# from app.crud.base import CRUDBase
-# from app import schemas
-# from app import models
-# from app.utils.session import session_manager
-#
-#
-# class CRUDJournalDAS(CRUDBase[models.JournalDAS, schemas.Cre, schemas.IBoardUpdate]):
-#
-#     @session_manager
-#     async def get_by_name(
-#             self,
-#             name: str,
-#             session: AsyncSession | None = None
-#     ) -> models.Board | None:
-#         response = await session.execute(
-#             select(self.model).where(self.model.name == name))
-#         return response.scalar_one_or_none()
-#
-#
-# board = CRUDBoard(model=models.Board)
+from app.crud.base import CRUDBase
+from app import schemas
+from app import models
+
+model = models.JournalDAS
+update_schema = None
+create_schema = schemas.IJournalDASCreate
+
+
+class CRUDJournalDAS(CRUDBase[model, create_schema, update_schema]):
+    pass
+
+
+journal_das = CRUDJournalDAS(model=model)

@@ -6,8 +6,12 @@ from app import schemas
 from app import models
 from app.utils.session import session_manager
 
+model = models.Board
+update_schema = schemas.IBoardUpdate
+create_schema = schemas.IBoardCreate
 
-class CRUDBoard(CRUDBase[models.Board, schemas.IBoardCreate, schemas.IBoardUpdate]):
+
+class CRUDBoard(CRUDBase[model, create_schema, update_schema]):
 
     @session_manager
     async def get_by_name(
@@ -20,4 +24,4 @@ class CRUDBoard(CRUDBase[models.Board, schemas.IBoardCreate, schemas.IBoardUpdat
         return response.scalar_one_or_none()
 
 
-board = CRUDBoard(model=models.Board)
+board = CRUDBoard(model=model)
