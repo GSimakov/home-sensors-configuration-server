@@ -18,7 +18,7 @@ class CRUDDataAcquisitionSystem(CRUDBase[model, create_schema, update_schema]):
             self,
             name: str,
             session: AsyncSession | None = None
-    ) -> models.DataAcquisitionSystem | None:
+    ) -> model | None:
         response = await session.execute(
             select(self.model).where(self.model.name == name))
         return response.scalar_one_or_none()
@@ -28,10 +28,11 @@ class CRUDDataAcquisitionSystem(CRUDBase[model, create_schema, update_schema]):
             self,
             hardware_id: str,
             session: AsyncSession | None = None
-    ) -> models.DataAcquisitionSystem | None:
+    ) -> model | None:
         response = await session.execute(
             select(self.model).where(self.model.hardware_id == hardware_id))
         return response.scalar_one_or_none()
 
+    #todo returning model
 
 das = CRUDDataAcquisitionSystem(model=model)

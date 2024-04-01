@@ -1,19 +1,13 @@
-from fastapi import APIRouter, status, Depends, Request
+from fastapi import APIRouter, Depends
 from fastapi_pagination import Params
 
 from app import schemas
 from app import models
 from app import crud
-from app.api.v1 import dependencies as deps
-from app.utils import checks
 
 from app.schemas.response_schema import (
-    IPostResponseBase,
     create_response,
     IGetResponsePaginated,
-    IGetResponseBase,
-    IDeleteResponseBase,
-    IPutResponseBase
 )
 
 router = APIRouter()
@@ -35,4 +29,5 @@ async def read_journal_list(
     Gets a paginated list of DAS events
     """
     response = await crud_repo.get_multi_paginated(params=params)
+    print(response)
     return create_response(data=response)
