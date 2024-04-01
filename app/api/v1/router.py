@@ -4,11 +4,13 @@ from app.api.v1.endpoints import (
     measurement_type,
     das,
     board,
-    registration
+    registration,
+    journal_das
 )
 
 
 api_router_v1 = APIRouter()
+api_router_v1.include_router(journal_das.router, prefix="/journal", tags=["Journal"])
 api_router_v1.include_router(registration.router, prefix="/reg", tags=["Registration"])
 api_router_v1.include_router(das.router, prefix="/DAS", tags=["DAS"])
 api_router_v1.include_router(board.router, prefix="/board", tags=["Board"])
