@@ -1,5 +1,4 @@
 from fastapi import APIRouter, status, Depends, Request
-from fastapi_pagination import Params
 
 from app import schemas
 from app import models
@@ -8,12 +7,8 @@ from app.api.v1 import dependencies as deps
 from app.utils.registration import registration
 
 from app.schemas.response_schema import (
-    IPostResponseBase,
     create_response,
-    IGetResponsePaginated,
-    IGetResponseBase,
     IDeleteResponseBase,
-    IPutResponseBase
 )
 
 
@@ -26,7 +21,7 @@ read_schema = schemas.IDASRead
 update_schema = schemas.IDASUpdate
 create_schema = schemas.IDASCreate
 
-crud_das = crud.das
+crud_repo = crud.das
 deps_from_path = deps.get_das_by_id_from_path
 
 
@@ -45,6 +40,7 @@ async def register_das(
     return returning
 
 
+#todo cascade delete
 @router.delete("/{id}")
 async def unregister_das(
         current: model = Depends(

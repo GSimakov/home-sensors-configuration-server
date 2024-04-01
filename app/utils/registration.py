@@ -8,16 +8,16 @@ create_schema = schemas.IDASCreate
 
 async def registration(hardware_id: str, addr: str):
 
-    current_das = await crud_repo.get_by_hardware_id(hardware_id=hardware_id)
+    current = await crud_repo.get_by_hardware_id(hardware_id=hardware_id)
 
-    if current_das:
-        if current_das.address == addr:
+    if current:
+        if current.address == addr:
             return 'Already registered'
 
         else:
             update = update_schema(address=addr)
-            updated_das = await crud_repo.update(obj_current=current_das, obj_new=update)
-            return updated_das
+            updated_das = await crud_repo.update(obj_current=current, obj_new=update)
+            return 'Registration details updated'
 
     new_das = create_schema(hardware_id=hardware_id, address=addr)
     await crud_repo.create(obj_in=new_das)
