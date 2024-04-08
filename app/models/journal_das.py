@@ -7,7 +7,7 @@ __all__ = ['BaseJournalDAS', 'JournalDAS']
 
 
 class BaseJournalDAS(SQLModel):
-    DAS_id: UUID = Field(foreign_key="DataAcquisitionSystem.id")
+    DAS_id: UUID | None = Field(foreign_key="DataAcquisitionSystem.id")
     event: str
     status: str | None = None
 

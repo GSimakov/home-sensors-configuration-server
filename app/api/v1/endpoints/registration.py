@@ -4,7 +4,7 @@ from app import schemas
 from app import models
 from app import crud
 from app.api.v1 import dependencies as deps
-from app.utils.registration import registration
+from app.utils.registration import register, unregister
 
 from app.schemas.response_schema import (
     create_response,
@@ -34,22 +34,14 @@ async def register_das(
     Register a new das
     """
     das_ip_addr = request.client.host
-
-    returning = await registration(hardware_id=hardware_id, addr=das_ip_addr)
-
-    return returning
+    await register(hardware_id=hardware_id, addr=das_ip_addr)
 
 
 #todo cascade delete
-@router.delete("/{id}")
-async def unregister_das(
-        current: model = Depends(
-            deps_from_path
-        ),
-) -> IDeleteResponseBase[read_schema]:
+@router.delete("", status_code=status.HTTP_200_OK)
+async def prohibit_registration(hardware_id: str):
     """
     Unregister das by id
     """
+    await unregister(hardware_id=hardware_id)
 
-    deleted = await crud_repo.remove(id=current.id)
-    return create_response(data=deleted, message="{} removed".format(obj_in_message))

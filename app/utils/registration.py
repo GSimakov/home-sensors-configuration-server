@@ -1,3 +1,5 @@
+import uuid
+
 from app import crud, models, schemas
 
 crud_das = crud.das
@@ -9,7 +11,7 @@ create_schema_das = schemas.IDASCreate
 create_schema_journal = schemas.IJournalDASCreate
 
 
-async def registration(hardware_id: str, addr: str):
+async def register(hardware_id: str, addr: str):
 
     event = 'Registration Event'
 
@@ -35,5 +37,28 @@ async def registration(hardware_id: str, addr: str):
 
     status = 'Successfully registered'
     journal_event = create_schema_journal(event=event, status=status, DAS_id=registered_das.id)
+    await crud_journal.create(obj_in=journal_event)
+    return 0
+
+
+async def unregister(hardware_id: str):
+
+    event = 'Registration Event'
+
+    current = await crud_das.get_by_hardware_id(hardware_id=hardware_id)
+
+    print(current)
+
+    if current:
+        await crud_das.remove(id=current.id)
+        das_id = current.id
+        status = 'DAS removed'
+
+    else:
+        status = 'DAS with hardware id "{}" not found'.format(hardware_id)
+        print(status)
+        das_id = None
+
+    journal_event = create_schema_journal(event=event, status=status, DAS_id=uuid.uuid4())
     await crud_journal.create(obj_in=journal_event)
     return 0
