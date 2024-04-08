@@ -63,7 +63,7 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
     )
 
     config: "Config" = Relationship(
-        back_populates='das',
+        back_populates='das_list',
         sa_relationship_kwargs={
             "lazy": "joined",
             "primaryjoin": "DataAcquisitionSystem.config_id==Config.id",

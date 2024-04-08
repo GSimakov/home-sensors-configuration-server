@@ -4,7 +4,7 @@ from app import models
 
 __all__ = ['IConfigCreate', 'IConfigUpdate', 'IConfigRead']
 
-base_model = models.Config
+base_model = models.BaseConfig
 update_model = models.ConfigUpdate
 
 

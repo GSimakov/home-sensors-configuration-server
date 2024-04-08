@@ -27,7 +27,7 @@ class Config(BaseEntityModel, BaseConfig, table=True):
     __tablename__ = 'Config'
     __table_args__ = {'extend_existing': True}
 
-    das: list["DataAcquisitionSystem"] = Relationship(
+    das_list: list["DataAcquisitionSystem"] = Relationship(
         back_populates='config',
         sa_relationship_kwargs={
             "lazy": "selectin",
