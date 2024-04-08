@@ -23,6 +23,10 @@ class BaseDataAcquisitionSystem(SQLModel):
         default=None, foreign_key="Sensor.id"
     )
 
+    config_id: UUID | None = Field(
+        default=None, foreign_key="Config.id"
+    )
+
 
 class DataAcquisitionSystemUpdate(BaseDataAcquisitionSystem):
     hardware_id: str | None = None
@@ -30,6 +34,7 @@ class DataAcquisitionSystemUpdate(BaseDataAcquisitionSystem):
     address: str | None = None
     sensor_id: UUID | None = None
     board_id: UUID | None = None
+    config_id: UUID | None = None
 
 
 class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=True):
