@@ -5,11 +5,13 @@ from app.api.v1.endpoints import (
     das,
     board,
     registration,
-    journal_das
+    journal_das,
+    config
 )
 
 
 api_router_v1 = APIRouter()
+api_router_v1.include_router(config.router, prefix="/config", tags=["Config"])
 api_router_v1.include_router(journal_das.router, prefix="/journal", tags=["Journal"])
 api_router_v1.include_router(registration.router, prefix="/reg", tags=["Registration"])
 api_router_v1.include_router(das.router, prefix="/DAS", tags=["DAS"])
