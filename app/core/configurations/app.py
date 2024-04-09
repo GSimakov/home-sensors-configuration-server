@@ -12,8 +12,13 @@ from app.core.logging import InterceptHandler
 
 
 class AppSettings(BaseSettings):
-    API_VERSION: str = "v1"
-    API_V1_STR: str = f"/api/{API_VERSION}"
+    API_VERSION_DAS: str = "das"
+    API_VERSION_USER: str = "user"
+
+    API_DAS_STR: str = f"/api/{API_VERSION_DAS}"
+    API_USER_STR: str = f"/api/{API_VERSION_USER}"
+
+
     PROJECT_NAME: str = "Valeria"
     ASYNC_DATABASE_URL: PostgresDsn | str
     DATABASE_URL: PostgresDsn | str

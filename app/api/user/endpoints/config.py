@@ -1,11 +1,10 @@
-from fastapi import APIRouter, status, Depends, Request
+from fastapi import APIRouter, status, Depends
 from fastapi_pagination import Params
 
 from app import schemas
 from app import models
 from app import crud
-from app.api.v1 import dependencies as deps
-from app.utils import checks
+from app.api.user import dependencies as deps
 
 from app.schemas.response_schema import (
     IPostResponseBase,
@@ -18,85 +17,75 @@ from app.schemas.response_schema import (
 
 router = APIRouter()
 
-obj_in_message = 'Data Acquisition System'
+obj_in_message = 'Config'
 
-model = models.DataAcquisitionSystem
-read_schema = schemas.IDASRead
-update_schema = schemas.IDASUpdate
+model = models.Config
+read_schema = schemas.IConfigRead
+update_schema = schemas.IConfigUpdate
 create_schema = schemas.IDASCreate
 
-crud_repo = crud.das
-deps_from_path = deps.get_das_by_id_from_path
+crud_repo = crud.config
+deps_from_path = deps.get_config_by_id_from_path
 
 
 @router.get("/list")
-async def read_das_list(
+async def read_configs_list(
         params: Params = Depends(),
 ) -> IGetResponsePaginated[read_schema]:
     """
-    Gets a paginated list of data acquisition systems
+    Gets a paginated list of configs
     """
     response = await crud_repo.get_multi_paginated(params=params)
     return create_response(data=response)
 
 
 @router.get("/{id}")
-async def get_das_by_id(
+async def get_config_by_id(
         current: model = Depends(
             deps_from_path
         ),
 ) -> IGetResponseBase[read_schema]:
     """
-    Gets das by its id
+    Gets config by its id
     """
     return create_response(data=current)
 
 
 @router.put("/{id}")
-async def update_das_by_id(
+async def update_config_by_id(
         update: update_schema,
         current: model = Depends(
             deps_from_path
         ),
 ) -> IPutResponseBase[read_schema]:
     """
-    Updates das by id
+    Updates config by id
     """
-    if update.board_id:
-        await checks.board_is_exist(id=update.board_id)
-    if update.sensor_id:
-        await checks.sensor_is_exist(id=update.sensor_id)
 
     updated = await crud_repo.update(obj_current=current, obj_new=update)
     return create_response(data=updated, message='{} updated'.format(obj_in_message))
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-async def create_das(
+async def create_config(
         create: create_schema,
 ) -> IPostResponseBase[read_schema]:
     """
-    Creates a new das
+    Creates a new config
     """
-    if create.board_id:
-        await checks.board_is_exist(id=create.board_id)
-    if create.transmitter_id:
-        await checks.transmitter_is_exist(id=create.transmitter_id)
-    if create.sensor_id:
-        await checks.sensor_is_exist(id=create.sensor_id)
 
     created = await crud_repo.create(obj_in=create)
     return create_response(data=created, message='{} created'.format(obj_in_message))
 
 
 @router.delete("/{id}")
-async def remove_das(
+async def remove_config(
         current: model = Depends(
             deps_from_path
         ),
 ) -> IDeleteResponseBase[read_schema]:
     """
-    Deletes das by id
+    Deletes das by config
     """
 
     deleted = await crud_repo.remove(id=current.id)

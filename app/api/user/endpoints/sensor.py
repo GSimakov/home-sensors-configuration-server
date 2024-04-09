@@ -4,7 +4,7 @@ from fastapi_pagination import Params
 from app import schemas
 from app import models
 from app import crud
-from app.api.v1 import dependencies as deps
+from app.api.user import dependencies as deps
 from app.utils import checks
 
 from app.schemas.response_schema import (

@@ -5,8 +5,8 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.core.main_events import create_start_app_handler, create_stop_app_handler
 from app.core.settings import settings
-from app.api.v1.router import api_router_v1
-
+from app.api.user.router import api_router_user
+from app.api.das.router import api_router_das
 
 
 app = FastAPI(**settings.fastapi_kwargs)
@@ -38,5 +38,6 @@ app.add_event_handler(
 )
 
 add_pagination(app)
-app.include_router(api_router_v1, prefix=settings.API_V1_STR)
+app.include_router(api_router_das, prefix=settings.API_DAS_STR)
+app.include_router(api_router_user, prefix=settings.API_USER_STR)
 
