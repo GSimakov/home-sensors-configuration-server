@@ -16,5 +16,3 @@ api_router_user.include_router(das.router, prefix="/DAS", tags=["DAS"])
 api_router_user.include_router(board.router, prefix="/board", tags=["Board"])
 api_router_user.include_router(sensor.router, prefix="/sensor", tags=["Sensor"])
 api_router_user.include_router(measurement_type.router, prefix="/measurement_type", tags=["MeasurementType"])
-
-
