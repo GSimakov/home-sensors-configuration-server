@@ -22,7 +22,7 @@ obj_in_message = 'Config'
 model = models.Config
 read_schema = schemas.IConfigRead
 update_schema = schemas.IConfigUpdate
-create_schema = schemas.IDASCreate
+create_schema = schemas.IConfigCreate
 
 crud_repo = crud.config
 deps_from_path = deps.get_config_by_id_from_path
