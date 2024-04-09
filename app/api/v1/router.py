@@ -1,14 +1,6 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import (
-    sensor,
-    measurement_type,
-    das,
-    board,
-    registration,
-    journal_das,
-    config
-)
-
+from app.api.v1.endpoints.user_side import config, sensor, journal_das, board, measurement_type
+from app.api.v1.endpoints.das_side import registration, das
 
 api_router_v1 = APIRouter()
 api_router_v1.include_router(config.router, prefix="/config", tags=["Config"])
