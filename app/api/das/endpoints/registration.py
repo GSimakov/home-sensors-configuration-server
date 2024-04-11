@@ -31,11 +31,3 @@ async def register_das(
     await register(hardware_id=hardware_id, addr=das_ip_addr)
 
 
-#todo cascade delete
-@router.delete("", status_code=status.HTTP_200_OK)
-async def prohibit_registration(hardware_id: str):
-    """
-    Unregister das by id
-    """
-    await unregister(hardware_id=hardware_id)
-
