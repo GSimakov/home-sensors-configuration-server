@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 58e55bd1f67e
+Revision ID: 151c64e82659
 Revises: 
-Create Date: 2024-04-25 10:27:06.651707
+Create Date: 2024-04-25 10:39:06.700136
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,9 @@ import sqlalchemy as sa
 import sqlmodel
 import sqlalchemy_utils
 
+
 # revision identifiers, used by Alembic.
-revision: str = '58e55bd1f67e'
+revision: str = '151c64e82659'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -66,17 +67,17 @@ def upgrade() -> None:
     op.create_index(op.f('ix_Sensor_id'), 'Sensor', ['id'], unique=False)
     op.create_table('DataAcquisitionSystem',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('hardware_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('hardwareId', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('board_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
-    sa.Column('sensor_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
-    sa.Column('config_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('boardId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('sensorId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('configId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['board_id'], ['Board.id'], ),
-    sa.ForeignKeyConstraint(['config_id'], ['Config.id'], ),
-    sa.ForeignKeyConstraint(['sensor_id'], ['Sensor.id'], ),
+    sa.ForeignKeyConstraint(['boardId'], ['Board.id'], ),
+    sa.ForeignKeyConstraint(['configId'], ['Config.id'], ),
+    sa.ForeignKeyConstraint(['sensorId'], ['Sensor.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_DataAcquisitionSystem_id'), 'DataAcquisitionSystem', ['id'], unique=False)

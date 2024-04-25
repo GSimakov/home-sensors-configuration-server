@@ -11,19 +11,19 @@ __all__ = ['BaseDataAcquisitionSystem', 'DataAcquisitionSystem', 'DataAcquisitio
 class BaseDataAcquisitionSystem(SQLModel):
 
     name: str | None = None
-    hardware_id: str = Field(nullable=False)
+    hardwareId: str = Field(nullable=False)
 
     address: str = Field(nullable=False)
 
-    board_id: UUID | None = Field(
+    boardId: UUID | None = Field(
         default=None, foreign_key="Board.id"
     )
 
-    sensor_id: UUID | None = Field(
+    sensorId: UUID | None = Field(
         default=None, foreign_key="Sensor.id"
     )
 
-    config_id: UUID | None = Field(
+    configId: UUID | None = Field(
         default=None, foreign_key="Config.id"
     )
 
@@ -45,7 +45,7 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
         back_populates='das',
         sa_relationship_kwargs={
             "lazy": "joined",
-            "primaryjoin": "DataAcquisitionSystem.sensor_id==Sensor.id",
+            "primaryjoin": "DataAcquisitionSystem.sensorId==Sensor.id",
         }
     )
 
@@ -53,7 +53,7 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
         back_populates='das',
         sa_relationship_kwargs={
             "lazy": "joined",
-            "primaryjoin": "DataAcquisitionSystem.board_id==Board.id",
+            "primaryjoin": "DataAcquisitionSystem.boardId==Board.id",
         }
     )
 
