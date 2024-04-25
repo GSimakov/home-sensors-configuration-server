@@ -10,7 +10,7 @@ __all__ = ['BaseSensor', 'Sensor', 'SensorUpdate']
 class BaseSensor(SQLModel):
     name: str
     type: str
-    measurementTypeId: UUID | None = Field(
+    measurement_type_id: UUID | None = Field(
         default=None, foreign_key="MeasurementType.id"
     )
 
@@ -18,7 +18,7 @@ class BaseSensor(SQLModel):
 class SensorUpdate(BaseSensor):
     name: str | None = None
     type: str | None = None
-    measurementTypeId: UUID | None = None
+    measurement_type_id: UUID | None = None
 
 
 class Sensor(BaseEntityModel, BaseSensor, table=True):
@@ -31,14 +31,14 @@ class Sensor(BaseEntityModel, BaseSensor, table=True):
         back_populates='sensor',
         sa_relationship_kwargs={
             "lazy": "selectin",
-            "foreign_keys": "DataAcquisitionSystem.sensorId",
+            "foreign_keys": "DataAcquisitionSystem.sensor_id",
         }
     )
 
-    measurementType: "MeasurementType" = Relationship(
-        back_populates='sensorsList',
+    measurement_type: "MeasurementType" = Relationship(
+        back_populates='sensors_list',
         sa_relationship_kwargs={
             "lazy": "selectin",
-            "primaryjoin": "Sensor.measurementTypeId==MeasurementType.id",
+            "primaryjoin": "Sensor.measurement_type_id==MeasurementType.id",
         }
     )

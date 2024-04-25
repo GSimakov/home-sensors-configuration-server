@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 151c64e82659
+Revision ID: b02a321fe3ba
 Revises: 
-Create Date: 2024-04-25 10:39:06.700136
+Create Date: 2024-04-25 10:58:29.461440
 
 """
 from typing import Sequence, Union
@@ -14,7 +14,7 @@ import sqlalchemy_utils
 
 
 # revision identifiers, used by Alembic.
-revision: str = '151c64e82659'
+revision: str = 'b02a321fe3ba'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,7 +26,7 @@ def upgrade() -> None:
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('description', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('address', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('hardwareId', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('hardware_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -36,8 +36,8 @@ def upgrade() -> None:
     op.create_table('Config',
     sa.Column('ssid', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('password', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('confURL', sqlalchemy_utils.types.url.URLType(), nullable=True),
-    sa.Column('dataURL', sqlalchemy_utils.types.url.URLType(), nullable=True),
+    sa.Column('conf_url', sqlalchemy_utils.types.url.URLType(), nullable=True),
+    sa.Column('data_url', sqlalchemy_utils.types.url.URLType(), nullable=True),
     sa.Column('delay', sa.Integer(), nullable=False),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -57,38 +57,36 @@ def upgrade() -> None:
     op.create_table('Sensor',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('type', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('measurementTypeId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('measurement_type_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['measurementTypeId'], ['MeasurementType.id'], ),
+    sa.ForeignKeyConstraint(['measurement_type_id'], ['MeasurementType.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_Sensor_id'), 'Sensor', ['id'], unique=False)
     op.create_table('DataAcquisitionSystem',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('hardwareId', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('boardId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
-    sa.Column('sensorId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
-    sa.Column('configId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('board_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('sensor_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('config_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['boardId'], ['Board.id'], ),
-    sa.ForeignKeyConstraint(['configId'], ['Config.id'], ),
-    sa.ForeignKeyConstraint(['sensorId'], ['Sensor.id'], ),
+    sa.ForeignKeyConstraint(['board_id'], ['Board.id'], ),
+    sa.ForeignKeyConstraint(['config_id'], ['Config.id'], ),
+    sa.ForeignKeyConstraint(['sensor_id'], ['Sensor.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_DataAcquisitionSystem_id'), 'DataAcquisitionSystem', ['id'], unique=False)
     op.create_table('JournalDAS',
-    sa.Column('DASId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('DAS_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('event', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('status', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['DASId'], ['DataAcquisitionSystem.id'], ),
+    sa.ForeignKeyConstraint(['DAS_id'], ['DataAcquisitionSystem.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_JournalDAS_id'), 'JournalDAS', ['id'], unique=False)

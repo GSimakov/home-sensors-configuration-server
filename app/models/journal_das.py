@@ -7,7 +7,7 @@ __all__ = ['BaseJournalDAS', 'JournalDAS']
 
 
 class BaseJournalDAS(SQLModel):
-    DASId: UUID | None = Field(foreign_key="DataAcquisitionSystem.id")
+    DAS_id: UUID | None = Field(foreign_key="DataAcquisitionSystem.id")
     event: str
     status: str | None = None
 
@@ -21,7 +21,7 @@ class JournalDAS(BaseEntityModel, BaseJournalDAS, table=True):
         back_populates='journal',
         sa_relationship_kwargs={
             "lazy": "joined",
-            'primaryjoin': 'JournalDAS.DASId==DataAcquisitionSystem.id'
+            'primaryjoin': 'JournalDAS.DAS_id==DataAcquisitionSystem.id'
         }
     )
 

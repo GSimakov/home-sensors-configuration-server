@@ -8,18 +8,18 @@ __all__ = ['BaseBoard', 'Board', 'BoardUpdate']
 
 class BaseBoard(SQLModel):
 
-    name: str | None = Field(nullable=True)
-    description: str | None = Field(nullable=True)
+    name: str | None = None
+    description: str | None = None
     address: str | None = Field(nullable=True)
-    hardwareId: str | None = Field(nullable=True)
+    hardware_id: str | None = Field(nullable=True)
 
 
 class BoardUpdate(BaseBoard):
 
     name: str | None = None
-    description: str | None
+    description: str | None = None
     address: str | None = Field(nullable=True)
-    hardwareId: str | None = Field(nullable=True)
+    hardware_id: str | None = Field(nullable=True)
 
 
 class Board(BaseEntityModel, BaseBoard, table=True):
@@ -31,6 +31,6 @@ class Board(BaseEntityModel, BaseBoard, table=True):
         back_populates='board',
         sa_relationship_kwargs={
             "lazy": "joined",
-            "foreign_keys": "DataAcquisitionSystem.boardId",
+            "foreign_keys": "DataAcquisitionSystem.board_id",
         }
     )

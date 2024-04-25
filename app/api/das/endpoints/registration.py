@@ -4,7 +4,7 @@ from app import schemas
 from app import models
 from app import crud
 from app.api.user import dependencies as deps
-from app.utils.registration import register, unregister
+from app.utils.registration import register
 
 router = APIRouter()
 
