@@ -23,16 +23,5 @@ class CRUDDataAcquisitionSystem(CRUDBase[model, create_schema, update_schema]):
             select(self.model).where(self.model.name == name))
         return response.scalar_one_or_none()
 
-    @session_manager
-    async def get_by_hardware_id(
-            self,
-            hardware_id: str,
-            session: AsyncSession | None = None
-    ) -> model | None:
-        response = await session.execute(
-            select(self.model).where(self.model.hardware_id == hardware_id))
-        return response.scalar_one_or_none()
-
-    #todo returning model
 
 das = CRUDDataAcquisitionSystem(model=model)

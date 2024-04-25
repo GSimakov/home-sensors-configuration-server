@@ -46,13 +46,23 @@ class CRUDConfig(CRUDBase[model, create_schema, update_schema]):
         return response.scalar_one_or_none()
 
     @session_manager
-    async def get_server_url_by_id(
+    async def get_data_service_url_by_id(
             self,
             id: UUID,
             session: AsyncSession | None = None
     ) -> str:
         response = await session.execute(
-            select(self.model.serverURL).where(self.model.id == id))
+            select(self.model.data_url).where(self.model.id == id))
+        return response.scalar_one_or_none()
+
+    @session_manager
+    async def get_conf_service_url_by_id(
+            self,
+            id: UUID,
+            session: AsyncSession | None = None
+    ) -> str:
+        response = await session.execute(
+            select(self.model.conf_url).where(self.model.id == id))
         return response.scalar_one_or_none()
 
 
