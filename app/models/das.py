@@ -29,12 +29,10 @@ class BaseDataAcquisitionSystem(SQLModel):
 
 
 class DataAcquisitionSystemUpdate(BaseDataAcquisitionSystem):
-    hardware_id: str | None = None
     name: str | None = None
-    address: str | None = None
-    sensor_id: UUID | None = None
-    board_id: UUID | None = None
-    config_id: UUID | None = None
+    sensorId: UUID | None = None
+    boardId: UUID | None = None
+    configId: UUID | None = None
 
 
 class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=True):
@@ -63,14 +61,14 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
         back_populates='das',
         sa_relationship_kwargs={
             "lazy": "selectin",
-            'foreign_keys': 'JournalDAS.DAS_id',
+            'foreign_keys': 'JournalDAS.DASId',
         }
     )
 
     config: "Config" = Relationship(
-        back_populates='das_list',
+        back_populates='dasList',
         sa_relationship_kwargs={
             "lazy": "joined",
-            "primaryjoin": "DataAcquisitionSystem.config_id==Config.id",
+            "primaryjoin": "DataAcquisitionSystem.configId==Config.id",
         }
     )

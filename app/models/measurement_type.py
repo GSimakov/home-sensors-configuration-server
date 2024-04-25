@@ -21,10 +21,10 @@ class MeasurementType(BaseEntityModel, BaseMeasurementType, table=True):
     __tablename__ = 'MeasurementType'
     __table_args__ = {'extend_existing': True}
 
-    sensors: list["Sensor"] = Relationship(
-        back_populates='measurement_type',
+    sensorsList: list["Sensor"] = Relationship(
+        back_populates='measurementType',
         sa_relationship_kwargs={
             "lazy": "selectin",
-            "foreign_keys": "Sensor.measurement_type_id",
+            "foreign_keys": "Sensor.measurementTypeId",
         }
     )

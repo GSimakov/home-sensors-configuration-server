@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 038a22f6d7e9
+Revision ID: 58e55bd1f67e
 Revises: 
-Create Date: 2024-04-01 16:28:32.091546
+Create Date: 2024-04-25 10:27:06.651707
 
 """
 from typing import Sequence, Union
@@ -10,10 +10,10 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 import sqlmodel
-
+import sqlalchemy_utils
 
 # revision identifiers, used by Alembic.
-revision: str = '038a22f6d7e9'
+revision: str = '58e55bd1f67e'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,12 +24,26 @@ def upgrade() -> None:
     op.create_table('Board',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('description', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('address', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('hardwareId', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_Board_id'), 'Board', ['id'], unique=False)
+    op.create_table('Config',
+    sa.Column('ssid', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('password', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('confURL', sqlalchemy_utils.types.url.URLType(), nullable=True),
+    sa.Column('dataURL', sqlalchemy_utils.types.url.URLType(), nullable=True),
+    sa.Column('delay', sa.Integer(), nullable=False),
+    sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_Config_id'), 'Config', ['id'], unique=False)
     op.create_table('MeasurementType',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('unit', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
@@ -42,11 +56,11 @@ def upgrade() -> None:
     op.create_table('Sensor',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('type', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('measurement_type_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('measurementTypeId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['measurement_type_id'], ['MeasurementType.id'], ),
+    sa.ForeignKeyConstraint(['measurementTypeId'], ['MeasurementType.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_Sensor_id'), 'Sensor', ['id'], unique=False)
@@ -56,22 +70,24 @@ def upgrade() -> None:
     sa.Column('address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('board_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('sensor_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('config_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['board_id'], ['Board.id'], ),
+    sa.ForeignKeyConstraint(['config_id'], ['Config.id'], ),
     sa.ForeignKeyConstraint(['sensor_id'], ['Sensor.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_DataAcquisitionSystem_id'), 'DataAcquisitionSystem', ['id'], unique=False)
     op.create_table('JournalDAS',
-    sa.Column('DAS_id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
+    sa.Column('DASId', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('event', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('status', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['DAS_id'], ['DataAcquisitionSystem.id'], ),
+    sa.ForeignKeyConstraint(['DASId'], ['DataAcquisitionSystem.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_JournalDAS_id'), 'JournalDAS', ['id'], unique=False)
@@ -88,6 +104,8 @@ def downgrade() -> None:
     op.drop_table('Sensor')
     op.drop_index(op.f('ix_MeasurementType_id'), table_name='MeasurementType')
     op.drop_table('MeasurementType')
+    op.drop_index(op.f('ix_Config_id'), table_name='Config')
+    op.drop_table('Config')
     op.drop_index(op.f('ix_Board_id'), table_name='Board')
     op.drop_table('Board')
     # ### end Alembic commands ###
