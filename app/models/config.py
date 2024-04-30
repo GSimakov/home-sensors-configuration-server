@@ -19,8 +19,8 @@ class BaseConfig(SQLModel):
 class ConfigUpdate(BaseConfig):
     ssid: str | None = None
     password: str | None = None
-    conf_url: str = Field(sa_column=Column(URLType))
-    data_url: str = Field(sa_column=Column(URLType))
+    conf_url: str | None = Field(sa_column=Column(URLType), default=None)
+    data_url: str | None = Field(sa_column=Column(URLType), default=None)
     delay: int | None = None
 
 
