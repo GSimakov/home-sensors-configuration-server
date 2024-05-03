@@ -13,7 +13,8 @@ class BaseConfig(SQLModel):
     password: str
     conf_url: str = Field(sa_column=Column(URLType))
     data_url: str = Field(sa_column=Column(URLType))
-    delay: int = 1000
+    delay: int = 10000
+    state: bool = False
 
 
 class ConfigUpdate(BaseConfig):
@@ -22,6 +23,7 @@ class ConfigUpdate(BaseConfig):
     conf_url: str | None = Field(sa_column=Column(URLType), default=None)
     data_url: str | None = Field(sa_column=Column(URLType), default=None)
     delay: int | None = None
+    state: bool | None = None
 
 
 class Config(BaseEntityModel, BaseConfig, table=True):

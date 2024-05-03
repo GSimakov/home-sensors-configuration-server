@@ -67,3 +67,15 @@ async def get_ssid_by_hardware_id(
     Gets ssid parameter by hardware id
     """
     return await crud.config.get_ssid_by_id(id=current_das.config_id)
+
+
+@router.get("/state/{hardware_id}")
+async def get_state_by_hardware_id(
+    current_das: models.DataAcquisitionSystem = Depends(
+        deps.get_das_by_board_hardware_id_from_path
+    ),
+):
+    """
+    Gets state parameter by hardware id
+    """
+    return await crud.config.get_delay_by_id(id=current_das.config_id)

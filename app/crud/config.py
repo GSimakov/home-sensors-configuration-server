@@ -65,5 +65,15 @@ class CRUDConfig(CRUDBase[model, create_schema, update_schema]):
             select(self.model.conf_url).where(self.model.id == id))
         return response.scalar_one_or_none()
 
+    @session_manager
+    async def get_state_by_id(
+            self,
+            id: UUID,
+            session: AsyncSession | None = None
+    ) -> str:
+        response = await session.execute(
+            select(self.model.state).where(self.model.id == id))
+        return response.scalar_one_or_none()
+
 
 config = CRUDConfig(model=model)
