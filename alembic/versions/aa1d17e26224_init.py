@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 9fdcc6e75c00
+Revision ID: aa1d17e26224
 Revises: 
-Create Date: 2024-05-03 18:29:53.495916
+Create Date: 2024-05-08 18:11:14.948811
 
 """
 from typing import Sequence, Union
@@ -14,7 +14,7 @@ import sqlalchemy_utils
 
 
 # revision identifiers, used by Alembic.
-revision: str = '9fdcc6e75c00'
+revision: str = 'aa1d17e26224'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -39,7 +39,6 @@ def upgrade() -> None:
     sa.Column('conf_url', sqlalchemy_utils.types.url.URLType(), nullable=True),
     sa.Column('data_url', sqlalchemy_utils.types.url.URLType(), nullable=True),
     sa.Column('delay', sa.Integer(), nullable=False),
-    sa.Column('state', sa.Boolean(), nullable=False),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -71,6 +70,7 @@ def upgrade() -> None:
     sa.Column('board_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('sensor_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('config_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
+    sa.Column('state', sa.Boolean(), nullable=False),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),

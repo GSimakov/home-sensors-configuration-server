@@ -24,12 +24,17 @@ class BaseDataAcquisitionSystem(SQLModel):
         default=None, foreign_key="Config.id"
     )
 
+    state: bool = False
+
 
 class DataAcquisitionSystemUpdate(BaseDataAcquisitionSystem):
     name: str | None = None
     sensor_id: UUID | None = None
     board_id: UUID | None = None
     config_id: UUID | None = None
+    state: bool | None = None
+
+
 
 
 class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=True):

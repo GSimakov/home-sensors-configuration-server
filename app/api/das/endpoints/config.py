@@ -78,4 +78,4 @@ async def get_state_by_hardware_id(
     """
     Gets state parameter by hardware id
     """
-    return await crud.config.get_delay_by_id(id=current_das.config_id)
+    return current_das.state
