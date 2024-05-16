@@ -25,7 +25,6 @@ class AppSettings(BaseSettings):
     DB_POOL_SIZE: int = 1
     MAX_OVERFLOW: int = 1
 
-    SECRET_KEY: str
 
     allowed_hosts: list[str] = ["*"]
 
