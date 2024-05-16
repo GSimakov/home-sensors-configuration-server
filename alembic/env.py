@@ -3,9 +3,9 @@ from logging.config import fileConfig
 from sqlalchemy.ext.asyncio import AsyncEngine
 from alembic import context
 from sqlmodel import SQLModel, create_engine
+import os
 
 from app.models import *
-from app.core.settings import settings
 
 target_metadata = SQLModel.metadata
 # this is the Alembic Config object, which provides
@@ -29,6 +29,9 @@ fileConfig(config.config_file_name)
 
 # target_metadata = SQLModel.metadata
 
+url = os.environ['DATABASE_URL']
+async_url = os.environ['ASYNC_DATABASE_URL']
+
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
 
@@ -41,7 +44,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = settings.ASYNC_DATABASE_URL
+
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -69,7 +72,7 @@ async def run_migrations_online():
     """
     connectable = AsyncEngine(
         create_engine(
-            settings.ASYNC_DATABASE_URL,
+            url=async_url,
             echo=True,
             future=True
         )
