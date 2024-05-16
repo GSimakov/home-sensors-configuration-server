@@ -2,18 +2,12 @@ FROM python:3.11-alpine
 
 WORKDIR /app
 
-COPY ./pyproject.toml ./alembic.ini /app/
+COPY ./pyproject.toml ./alembic.ini ./requirements.txt /app/
 
 RUN pip install --upgrade pip
-RUN pip install poetry
-
-RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
-RUN pip uninstall poetry -y
-
 
 COPY . /app/
-
 
 ENV ASYNC_DATABASE_URL="postgresql+asyncpg://admin:admin@localhost:5432/configs"
 ENV DATABASE_URL="postgresql://admin:admin@localhost:5432/configs"
