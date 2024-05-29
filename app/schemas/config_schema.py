@@ -1,3 +1,5 @@
+from pydantic import BaseModel
+
 from uuid import UUID
 from app import models
 
@@ -18,4 +20,9 @@ class IConfigUpdate(update_model):
 
 class IConfigRead(base_model):
     id: UUID
+
+
+class IConfigShortRead(BaseModel):
+    id: UUID
+    name: str
 

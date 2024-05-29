@@ -9,6 +9,7 @@ __all__ = ['BaseConfig', 'ConfigUpdate', 'Config']
 
 
 class BaseConfig(SQLModel):
+    name: str
     ssid: str
     password: str
     conf_url: str = Field(sa_column=Column(URLType))
@@ -17,6 +18,7 @@ class BaseConfig(SQLModel):
 
 
 class ConfigUpdate(BaseConfig):
+    name: str | None = None
     ssid: str | None = None
     password: str | None = None
     conf_url: str | None = Field(sa_column=Column(URLType), default=None)

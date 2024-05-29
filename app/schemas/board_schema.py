@@ -1,3 +1,5 @@
+from pydantic import BaseModel
+
 from uuid import UUID
 from app import models
 
@@ -17,4 +19,9 @@ class IBoardUpdate(update_model):
 
 class IBoardRead(base_model):
     id: UUID
+
+
+class IBoardShortRead(BaseModel):
+    id: UUID
+    name: str
 

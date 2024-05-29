@@ -2,31 +2,50 @@ from random import random
 import random
 
 from app import crud
-from .data import *
-from app import crud
+from app import schemas
 
 
 async def insert():
-    pass
-#
-#     for sensor in sensors:
-#         current_sensor = await crud.sensor.get_by_name(name=sensor.name)
-#         if not current_sensor:
-#             await crud.sensor.create(obj_in=sensor)
-#
-#     for sensor_type in sensor_types:
-#         current_sensor_type = await crud.sensor_type.get_by_name(name=sensor_type.name)
-#         if not current_sensor_type:
-#             await crud.sensor_type.create(obj_in=sensor_type)
-#
-#     for measurements_type in measurements_types:
-#         current_measurement_type = await crud.measurement_type.get_by_name(name=measurements_type.name)
-#         if not current_measurement_type:
-#             await crud.measurement_type.create(obj_in=measurements_type)
-#
-#     for transmitter in transmitters:
-#         current_transmitter = await crud.transmitter.get_by_mac(mac=transmitter.MAC)
-#         if not current_transmitter:
-#             await crud.transmitter.create(obj_in=transmitter)
-#
+    measurements_types: list[schemas.IMeasurementTypeCreate] = [
+        schemas.IMeasurementTypeCreate(name='Градус Цельсия', unit='°С'),
+        schemas.IMeasurementTypeCreate(name='Люмен', unit='лм'),
+        schemas.IMeasurementTypeCreate(name='Относительная влажность', unit='%'),
+    ]
 
+    for type in measurements_types:
+        created_type = await crud.measurement_type.create(obj_in=type)
+
+        sensor: schemas.ISensorCreate = schemas.ISensorCreate(
+            name='Датчик{}'.format(random.randint(1, 100)),
+            type='ТипДатчика1',
+            measurement_type_id=created_type.id
+        )
+
+        board: schemas.IBoardCreate = schemas.IBoardCreate(
+            address='192.168.0.10',
+            hardware_id='Холодильник{}'.format(random.randint(1,100)),
+            name='BoardFridge{}'.format(random.randint(1, 100)))
+
+        config: schemas.IConfigCreate = schemas.IConfigCreate(
+            name='Конфигурация{}'.format(random.randint(1, 100)),
+            ssid='WIFI',
+            password='123',
+            conf_url='URLPLACEHOLDER',
+            data_url='URLPLACEHOLDER',
+            delay=10000
+        )
+
+
+        created_sensor = await crud.sensor.create(obj_in=sensor)
+        created_board = await crud.board.create(obj_in=board)
+        created_config = await crud.config.create(obj_in=config)
+
+        das: schemas.IDASCreate = schemas.IDASCreate(
+            name='СистемаСбора{}'.format(random.randint(1, 100)),
+            board_id=created_board.id,
+            sensor_id=created_sensor.id,
+            config_id=created_config.id,
+            state=False
+        )
+
+        await crud.das.create(obj_in=das)

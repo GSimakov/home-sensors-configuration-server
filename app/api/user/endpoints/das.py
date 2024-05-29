@@ -22,6 +22,7 @@ obj_in_message = 'Data Acquisition System'
 
 model = models.DataAcquisitionSystem
 read_schema = schemas.IDASRead
+read_schema_full = schemas.IDASFullRead
 update_schema = schemas.IDASUpdate
 create_schema = schemas.IDASCreate
 
@@ -45,7 +46,7 @@ async def get_das_by_id(
         current: model = Depends(
             deps_from_path
         ),
-) -> IGetResponseBase[read_schema]:
+) -> IGetResponseBase[read_schema_full]:
     """
     Gets das by its id
     """
@@ -78,10 +79,12 @@ async def create_das(
     """
     Creates a new das
     """
+
+    await checks.das_name_is_taken(name=create.name)
+
     if create.board_id:
         await checks.board_is_exist(id=create.board_id)
-    if create.transmitter_id:
-        await checks.transmitter_is_exist(id=create.transmitter_id)
+
     if create.sensor_id:
         await checks.sensor_is_exist(id=create.sensor_id)
 

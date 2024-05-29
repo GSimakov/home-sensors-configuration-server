@@ -1,3 +1,5 @@
+from pydantic import BaseModel
+
 from uuid import UUID
 from app import models
 
@@ -18,3 +20,7 @@ class ISensorUpdate(update_model):
 class ISensorRead(base_model):
     id: UUID
 
+
+class ISensorShortRead(BaseModel):
+    id: UUID
+    name: str

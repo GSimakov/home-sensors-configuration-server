@@ -35,13 +35,10 @@ class DataAcquisitionSystemUpdate(BaseDataAcquisitionSystem):
     state: bool | None = None
 
 
-
-
 class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=True):
 
     __tablename__ = 'DataAcquisitionSystem'
     __table_args__ = {'extend_existing': True}
-
 
     sensor: "Sensor" = Relationship(
         back_populates='das',
