@@ -27,6 +27,12 @@ class IResponseBase(GenericModel, Generic[T]):
     data: T | None
 
 
+class IResponseList(GenericModel, Generic[T]):
+    message: str = ""
+    meta: dict = {}
+    data: list | None
+
+
 class IResponsePage(AbstractPage[T], Generic[T]):
     message: str | None = ""
     meta: dict = {}
@@ -60,6 +66,10 @@ class IResponsePage(AbstractPage[T], Generic[T]):
 
 
 class IGetResponseBase(IResponseBase[DataType], Generic[DataType]):
+    message: str | None = "Data got correctly"
+
+
+class IGetResponseList(IResponseList[DataType], Generic[DataType]):
     message: str | None = "Data got correctly"
 
 

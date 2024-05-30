@@ -12,7 +12,8 @@ from app.schemas.response_schema import (
     IGetResponsePaginated,
     IGetResponseBase,
     IDeleteResponseBase,
-    IPutResponseBase
+    IPutResponseBase,
+    IGetResponseList
 )
 
 router = APIRouter()
@@ -27,14 +28,25 @@ create_schema = schemas.IBoardCreate
 crud_repo = crud.board
 deps_from_path = deps.get_board_by_id_from_path
 
-@router.get("/list")
-async def read_board_list(
+
+@router.get("/paginated_list")
+async def read_board_list_paginated(
         params: Params = Depends(),
 ) -> IGetResponsePaginated[read_schema]:
     """
     Gets a paginated list of boards
     """
     response = await crud_repo.get_multi_paginated(params=params)
+    return create_response(data=response)
+
+
+@router.get("/list")
+async def read_board_list(
+) -> IGetResponseList[read_schema]:
+    """
+    Gets a paginated list of boards
+    """
+    response = await crud_repo.get_multi(limit=1000)
     return create_response(data=response)
 
 
