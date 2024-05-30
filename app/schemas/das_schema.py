@@ -30,7 +30,9 @@ class IDASRead(base_model):
 
 class IDASFullRead(BaseModel):
     id: UUID
+    name: str
     board: IBoardShortRead
     config: IConfigShortRead
     sensor: ISensorShortRead
     created_at: datetime.datetime
+    updated_at: datetime.datetime
