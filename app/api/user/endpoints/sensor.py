@@ -13,7 +13,8 @@ from app.schemas.response_schema import (
     IGetResponsePaginated,
     IGetResponseBase,
     IDeleteResponseBase,
-    IPutResponseBase
+    IPutResponseBase,
+    IGetResponseList
 )
 
 router = APIRouter()
@@ -29,14 +30,24 @@ crud_repo = crud.sensor
 deps_from_path = deps.get_sensor_by_id_from_path
 
 
-@router.get("/list")
-async def read_sensors_list(
+@router.get("/list_paginated")
+async def read_sensors_list_paginated(
         params: Params = Depends(),
 ) -> IGetResponsePaginated[read_schema]:
     """
     Gets a paginated list of sensors
     """
     response = await crud_repo.get_multi_paginated(params=params)
+    return create_response(data=response)
+
+
+@router.get("/list")
+async def read_sensors_list(
+) -> IGetResponseList[read_schema]:
+    """
+    Gets a paginated list of boards
+    """
+    response = await crud_repo.get_multi(limit=1000)
     return create_response(data=response)
 
 
