@@ -8,7 +8,8 @@ from pydantic import BaseModel
 from sqlmodel import SQLModel, select, func
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel.sql.expression import Select
-from sqlalchemy import exc
+from sqlalchemy import exc, desc, asc
+
 
 from app.utils.session import session_manager
 
@@ -70,7 +71,7 @@ class CRUDBase(Generic[DefaultModelType, CreateSchemaType, UpdateSchemaType]):
         session: AsyncSession,
         params: Params | None = Params(),
     ) -> Page[DefaultModelType]:
-        query = select(self.model)
+        query = select(self.model).order_by(desc(self.model.created_at))
         return await paginate(session, query, params)
 
     @session_manager
