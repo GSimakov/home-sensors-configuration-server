@@ -30,7 +30,7 @@ class Board(BaseEntityModel, BaseBoard, table=True):
     das: "DataAcquisitionSystem" = Relationship(
         back_populates='board',
         sa_relationship_kwargs={
-            "lazy": "joined",
-            "foreign_keys": "DataAcquisitionSystem.board_id",
+            # "lazy": "joined",
+            'uselist': False,
         }
     )

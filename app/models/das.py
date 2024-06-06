@@ -43,7 +43,6 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
     sensor: "Sensor" = Relationship(
         back_populates='das',
         sa_relationship_kwargs={
-            "lazy": "joined",
             "primaryjoin": "DataAcquisitionSystem.sensor_id==Sensor.id",
         }
     )
@@ -51,15 +50,13 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
     board: "Board" = Relationship(
         back_populates='das',
         sa_relationship_kwargs={
-            "lazy": "joined",
-            "primaryjoin": "DataAcquisitionSystem.board_id==Board.id",
+            'primaryjoin': 'DataAcquisitionSystem.board_id==Board.id',
         }
     )
 
-    journal: list["JournalDAS"] = Relationship(
+    journal: "JournalDAS" = Relationship(
         back_populates='das',
         sa_relationship_kwargs={
-            "lazy": "selectin",
             'foreign_keys': 'JournalDAS.DAS_id',
         }
     )
@@ -67,7 +64,6 @@ class DataAcquisitionSystem(BaseEntityModel, BaseDataAcquisitionSystem, table=Tr
     config: "Config" = Relationship(
         back_populates='das_list',
         sa_relationship_kwargs={
-            "lazy": "joined",
             "primaryjoin": "DataAcquisitionSystem.config_id==Config.id",
         }
     )

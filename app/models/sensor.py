@@ -26,19 +26,16 @@ class Sensor(BaseEntityModel, BaseSensor, table=True):
     __tablename__ = 'Sensor'
     __table_args__ = {'extend_existing': True}
 
-    #todo many them one sensor on board?
     das: "DataAcquisitionSystem" = Relationship(
         back_populates='sensor',
         sa_relationship_kwargs={
-            "lazy": "selectin",
-            "foreign_keys": "DataAcquisitionSystem.sensor_id",
+            'uselist': False
         }
     )
 
     measurement_type: "MeasurementType" = Relationship(
         back_populates='sensors_list',
         sa_relationship_kwargs={
-            "lazy": "selectin",
             "primaryjoin": "Sensor.measurement_type_id==MeasurementType.id",
         }
     )
