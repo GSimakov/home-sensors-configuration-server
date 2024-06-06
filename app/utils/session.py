@@ -1,10 +1,9 @@
-from app.core.connections.db.session import async_session
+from app.core.connections.db.session import AsyncSession
 
 
 def session_manager(func):
-
     async def wrap(*args, **kwargs):
-        async with async_session() as session:
+        async with AsyncSession() as session:
             response = await func(session=session, *args, **kwargs)
             await session.close()
         return response
