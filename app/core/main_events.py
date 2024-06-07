@@ -10,7 +10,6 @@ def create_start_app_handler(
 ) -> Callable:
     async def start_app() -> None:
         # await insert()
-        # sudo docker container restart minio && sudo docker container restart magical_williams
         pass
     return start_app
 
