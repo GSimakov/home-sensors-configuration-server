@@ -29,7 +29,7 @@ crud_repo = crud.board
 deps_from_path = deps.get_board_by_id_from_path
 
 
-@router.get("/paginated_list")
+@router.get("/list_paginated")
 async def read_board_list_paginated(
         params: Params = Depends(),
 ) -> IGetResponsePaginated[read_schema]:

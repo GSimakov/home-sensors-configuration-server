@@ -10,19 +10,19 @@ __all__ = ['BaseConfig', 'ConfigUpdate', 'Config']
 
 class BaseConfig(SQLModel):
     name: str
-    ssid: str
-    password: str
-    conf_url: str = Field(sa_column=Column(URLType))
-    data_url: str = Field(sa_column=Column(URLType))
-    delay: int = 10000
+    ssid: str | None = None
+    password: str | None = None
+    conf_url: str | None = None
+    data_url: str | None = None
+    delay: int | None = 10000
 
 
 class ConfigUpdate(BaseConfig):
     name: str | None = None
     ssid: str | None = None
     password: str | None = None
-    conf_url: str | None = Field(sa_column=Column(URLType), default=None)
-    data_url: str | None = Field(sa_column=Column(URLType), default=None)
+    conf_url: str | None = None
+    data_url: str | None = None
     delay: int | None = None
 
 

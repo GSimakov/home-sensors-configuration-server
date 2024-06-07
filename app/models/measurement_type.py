@@ -7,7 +7,7 @@ __all__ = ['BaseMeasurementType', 'MeasurementType', 'MeasurementTypeUpdate']
 
 class BaseMeasurementType(SQLModel):
     name: str
-    unit: str
+    unit: str | None = None
 
 
 class MeasurementTypeUpdate(BaseMeasurementType):

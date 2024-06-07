@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import BaseModel
 
 from uuid import UUID
@@ -19,6 +21,7 @@ class ISensorUpdate(update_model):
 
 class ISensorRead(base_model):
     id: UUID
+    created_at: datetime.datetime
 
 
 class ISensorShortRead(BaseModel):

@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 542f93093e83
+Revision ID: 8bca1954ae39
 Revises: 
-Create Date: 2024-06-06 15:36:42.083688
+Create Date: 2024-06-07 18:37:19.436193
 
 """
 from typing import Sequence, Union
@@ -10,10 +10,10 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 import sqlmodel
-import sqlalchemy_utils
+
 
 # revision identifiers, used by Alembic.
-revision: str = '542f93093e83'
+revision: str = '8bca1954ae39'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -34,11 +34,11 @@ def upgrade() -> None:
     op.create_index(op.f('ix_Board_id'), 'Board', ['id'], unique=False)
     op.create_table('Config',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('ssid', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('password', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('conf_url', sqlalchemy_utils.types.url.URLType(), nullable=True),
-    sa.Column('data_url', sqlalchemy_utils.types.url.URLType(), nullable=True),
-    sa.Column('delay', sa.Integer(), nullable=False),
+    sa.Column('ssid', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('password', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('conf_url', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('data_url', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('delay', sa.Integer(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -47,7 +47,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_Config_id'), 'Config', ['id'], unique=False)
     op.create_table('MeasurementType',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('unit', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('unit', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -56,7 +56,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_MeasurementType_id'), 'MeasurementType', ['id'], unique=False)
     op.create_table('Sensor',
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('type', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('type', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('measurement_type_id', sqlmodel.sql.sqltypes.GUID(), nullable=True),
     sa.Column('id', sqlmodel.sql.sqltypes.GUID(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),

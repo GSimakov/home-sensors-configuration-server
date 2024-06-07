@@ -1,3 +1,4 @@
+import datetime
 from uuid import UUID
 from app import models
 
@@ -17,4 +18,5 @@ class IMeasurementTypeUpdate(update_model):
 
 class IMeasurementTypeRead(base_model):
     id: UUID
+    created_at: datetime.datetime
 

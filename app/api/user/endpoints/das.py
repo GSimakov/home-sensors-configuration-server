@@ -66,15 +66,7 @@ async def update_das_by_id(
     """
     Updates das by id
     """
-    # async with AsyncSession() as async_session:
-        # if update.board_id:
-        #     await checks.board_is_exist(id=update.board_id)
-        # if update.sensor_id:
-        #     await checks.sensor_is_exist(id=update.sensor_id)
     updated = await crud_repo.update(obj_current=current, obj_new=update)
-        # await async_session.commit()
-        # await async_session.close()
-
     return create_response(data=updated, message='{} updated'.format(obj_in_message))
 
 

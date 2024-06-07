@@ -9,7 +9,7 @@ __all__ = ['BaseSensor', 'Sensor', 'SensorUpdate']
 
 class BaseSensor(SQLModel):
     name: str
-    type: str
+    type: str | None = None
     measurement_type_id: UUID | None = Field(
         default=None, foreign_key="MeasurementType.id"
     )

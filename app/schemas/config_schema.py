@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import BaseModel
 
 from uuid import UUID
@@ -20,6 +22,7 @@ class IConfigUpdate(update_model):
 
 class IConfigRead(base_model):
     id: UUID
+    created_at: datetime.datetime
 
 
 class IConfigShortRead(BaseModel):

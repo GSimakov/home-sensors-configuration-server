@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import BaseModel
 
 from uuid import UUID
@@ -19,6 +21,7 @@ class IBoardUpdate(update_model):
 
 class IBoardRead(base_model):
     id: UUID
+    created_at: datetime.datetime
 
 
 class IBoardShortRead(BaseModel):

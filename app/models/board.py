@@ -18,8 +18,8 @@ class BoardUpdate(BaseBoard):
 
     name: str | None = None
     description: str | None = None
-    address: str | None = Field(nullable=True)
-    hardware_id: str | None = Field(nullable=True)
+    address: str | None = None
+    hardware_id: str | None = None
 
 
 class Board(BaseEntityModel, BaseBoard, table=True):
